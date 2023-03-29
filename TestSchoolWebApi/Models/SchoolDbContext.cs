@@ -7,8 +7,8 @@ namespace TestSchool.Models
         public SchoolDbContext(DbContextOptions<SchoolDbContext> options) :
              base(options)
         {
-
         }
+        
         public DbSet<Student> Students { get; set; }
         public DbSet<Address> Address { get; set; }
     }
