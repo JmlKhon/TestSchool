@@ -1,6 +1,6 @@
 ﻿namespace TestSchool.Models
 {
-    public class Address
+    public class Address:BaseEntity
     {
         public int AddressId { get; set; }
 
