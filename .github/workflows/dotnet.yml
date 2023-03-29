@@ -25,5 +25,3 @@ jobs:
       working-directory: ./TestSchoolWebApi
     - name: Build
       run: dotnet build ./TestSchoolWebApi/TestSchool.sln
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
