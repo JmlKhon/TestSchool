@@ -24,6 +24,6 @@ jobs:
       run: dotnet restore
       working-directory: ./TestSchoolWebApi
     - name: Build
-      run: dotnet build ./TestSchoolWebApiTestSchool.sln
+      run: dotnet build ./TestSchoolWebApi/TestSchool.sln
     - name: Test
       run: dotnet test --no-build --verbosity normal
