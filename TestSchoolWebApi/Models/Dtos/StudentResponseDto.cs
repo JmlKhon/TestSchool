@@ -1,15 +1,11 @@
-﻿namespace TestSchool.Models
+﻿namespace TestSchool.Models.Dtos
 {
-    public class Student
+    public class StudentResponseDto
     {
         public int StudentId { get; set; }
 
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
-
-        public int AddressId { get; set; }
-
-        public Address Address { get; set; }
     }
 }

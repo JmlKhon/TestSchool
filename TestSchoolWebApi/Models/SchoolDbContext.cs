@@ -2,10 +2,9 @@
 
 namespace TestSchool.Models
 {
-    public class AppDbContext:DbContext
+    public class SchoolDbContext:DbContext
     {
-        public AppDbContext(DbContextOptions<AppDbContext>options):
-            base(options)
+        public SchoolDbContext(DbContextOptions<SchoolDbContext> options) :base(options)
         {
 
         }
