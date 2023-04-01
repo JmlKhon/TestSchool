@@ -16,7 +16,7 @@ o'tilgan darslarni takrorlash uchun yordam beradi.
 
 1. Projectni Visual Studioda ochish kerak
 2. appsettings.json ga kirish kerak
-3. 1-qatordan `enter` orqali 2-qatorga tushib shu kodni yoziladi, agar bu code bo'lsa uning kerakli joylarini o'jgartirish lozim:
+3. 1-qatordan `enter` orqali 2-qatorga tushib shu kodni yoziladi, agar bu code bo'lsa uning kerakli joylarini o'zgartirish lozim:
 ```.json
 "ConnectionStrings": {
     "DefaultConnect": "user id=postgres; password=PgAdmin kodini kiriting; server=localhost; port=5432; database=Database nomini kiriting; pooling=true"
