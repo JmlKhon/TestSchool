@@ -2,7 +2,6 @@
 {
     public class StudentRequestDto
     {
-        public int StudentId { get; set; }
 
         public string FirstName { get; set; }
 
