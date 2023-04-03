@@ -2,7 +2,7 @@
 {
     public class AddressResponseDto
     {
-        public string Addressid { get; set; }
+        public string AddressId { get; set; }
 
         public string Country { get; set; }
 
