@@ -5,5 +5,7 @@
         public int StudentId { get; set; }
 
         public int StudentName { get; set; }
+
+        public string Address { get; set; }
     }
 }
