@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using TestSchool.Models;
 using TestSchool.Models.Dtos;
 using TestSchool.Repository;
@@ -35,17 +34,23 @@ namespace TestSchool.Controllers
         [HttpGet("id")]
         public ActionResult<Student> GetStudent(int id)
         {
-            return _studentRepository.GetStudent(id);
+            var resStudent = _studentRepository.GetStudent(id);
+            if (resStudent is null)
+            {
+                return new StatusCodeResult(404);
+            }
+
+            return resStudent;
         }
 
         [HttpGet]
-        public ActionResult<List<Student>> GetStudents() 
+        public ActionResult<List<Student>> GetStudents()
         {
             return _studentRepository.GetStudents();
         }
 
         [HttpPost]
-        public ActionResult<int> UpdateStudent(StudentRequestDto studentRequestDto,int id) 
+        public ActionResult<int> UpdateStudent(StudentRequestDto studentRequestDto, int id)
         {
             var studentExist = _studentRepository.GetStudent(id);
             var student = new Student
@@ -61,13 +66,17 @@ namespace TestSchool.Controllers
                 student.StudentId = studentExist.StudentId;
                 _studentRepository.UpdateStudent(student);
             }
+            else
+            {
+                return new StatusCodeResult(404);
+            }
             return id;
         }
 
         [HttpDelete("id")]
         public ActionResult<int> DeleteStudent(int id)
         {
-            var student= _studentRepository.GetStudent(id);
+            var student = _studentRepository.GetStudent(id);
             _studentRepository.DeleteStudent(student);
             return id;
         }
