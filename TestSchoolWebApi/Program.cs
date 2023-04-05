@@ -10,6 +10,7 @@ builder.Services.AddControllers();
 var config = builder.Configuration.GetSection("ConnectionStrings");
 builder.Services.AddDbContext<SchoolDbContext>(option => option.UseNpgsql(config["Connect"]));
 builder.Services.AddScoped<IAddressRepository, AddressRepository>();
+builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<SchoolDbContext>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
