@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using TestSchool.Models;
+using TestSchool.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +9,8 @@ builder.Services.AddControllers();
 
 var config = builder.Configuration.GetSection("ConnectionStrings");
 builder.Services.AddDbContext<SchoolDbContext>(option => option.UseNpgsql(config["Connect"]));
-
+builder.Services.AddScoped<IAddressRepository, AddressRepository>();
+builder.Services.AddScoped<SchoolDbContext>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
