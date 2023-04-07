@@ -49,7 +49,7 @@ namespace TestSchool.Controllers
             return _studentRepository.GetStudents();
         }
 
-        [HttpPost]
+        [HttpPut]
         public ActionResult<int> UpdateStudent(StudentRequestDto studentRequestDto, int id)
         {
             var studentExist = _studentRepository.GetStudent(id);
