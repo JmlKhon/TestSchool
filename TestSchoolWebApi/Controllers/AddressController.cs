@@ -16,7 +16,6 @@ namespace TestSchool.Controllers
             _repository = repository;
         }
 
-
         [HttpPost]
         public ActionResult<int> AddAddress(AddressRequestDto addressDto)
         {
@@ -33,8 +32,7 @@ namespace TestSchool.Controllers
             }
             catch (Exception ex)
             {
-                // exception ni registratsiya qilish
-                // xato xaqida malumot beradi
+                Console.WriteLine(ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
@@ -55,8 +53,7 @@ namespace TestSchool.Controllers
             }
             catch (Exception ex)
             {
-                // exception ni registratsiya qilish
-                // xato xaqida malumot beradi
+                Console.WriteLine(ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
@@ -71,12 +68,10 @@ namespace TestSchool.Controllers
             }
             catch (Exception ex)
             {
-                // exception ni registratsiya qilish
-                // xato xaqida malumot beradi
+                Console.WriteLine(ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
-
 
         [HttpPut]
         public ActionResult<int> UpdateAddress(AddressRequestDto addressDto, int id)
@@ -100,8 +95,7 @@ namespace TestSchool.Controllers
             }
             catch (Exception ex)
             {
-                // exception ni registratsiya qilish
-                // xato xaqida malumot beradi
+                Console.WriteLine(ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
@@ -117,8 +111,7 @@ namespace TestSchool.Controllers
             }
             catch (Exception ex)
             {
-                // exception ni registratsiya qilish
-                // xato xaqida malumot beradi
+                Console.WriteLine(ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
