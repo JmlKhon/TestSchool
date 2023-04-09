@@ -1,4 +1,5 @@
-﻿using TestSchool.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using TestSchool.Models;
 
 namespace TestSchool.Repository
 {
@@ -17,21 +18,16 @@ namespace TestSchool.Repository
             return address.AddressId;
         }
 
-        public Address GetAddress(int id)
-        {
-            return _context.Address.FirstOrDefault(u => u.AddressId == id);
-        }
+        public Address GetAddress(int id) => _context.Address
+            .Include(s => s.Students).FirstOrDefault(u => u.AddressId == id);
 
-        public List<Address> GetAddresses()
-        {
-            return _context.Address.ToList();
-        }
+        public List<Address> GetAddresses() => _context.Address
+            .Include(s => s.Students).ToList();
 
         public void UpdateAddress(Address address)
         {
             var AddressExist = GetAddress(address.AddressId);
 
-            AddressExist.AddressId = address.AddressId;
             AddressExist.City = address.City;
             AddressExist.Country = address.Country;
             AddressExist.Street = address.Street;

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Reflection.Metadata;
 
 namespace TestSchool.Models
 {
@@ -8,7 +9,7 @@ namespace TestSchool.Models
              base(options)
         {
         }
-        
+
         public DbSet<Student> Students { get; set; }
         public DbSet<Address> Address { get; set; }
     }

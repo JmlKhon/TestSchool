@@ -10,63 +10,78 @@ namespace TestSchool.Controllers
     [ApiController]
     public class AddressController : ControllerBase
     {
-        private readonly IAddressRepository _repository;
+        private readonly IAddressRepository _addressRepository;
 
-        public AddressController(IAddressRepository repository)
+        public AddressController(IAddressRepository addressRepository)
         {
-            _repository = repository;
+            _addressRepository = addressRepository;
         }
 
         [HttpPost]
-        public ActionResult<int> AddAddress(AddressRequestDto addressDto)
+        public ActionResult<int> AddAddress(AddressRequestDto addressRequestDto)
         {
             var address = new Address
             {
-                Country = addressDto.Country,
-                Street = addressDto.Street,
-                City = addressDto.City,
+                Country = addressRequestDto.Country,
+                Street = addressRequestDto.Street,
+                City = addressRequestDto.City,
             };
-            _repository.AddAddress(address);
+            _addressRepository.AddAddress(address);
             return address.AddressId;
         }
 
         [HttpGet("id")]
-        public ActionResult<Address> GetAddress(int id)
+        public ActionResult<AddressResponseDto> GetAddress(int id)
         {
-            return _repository.GetAddress(id);
+            var address = _addressRepository.GetAddress(id);
+            var addressResponseDto = new AddressResponseDto
+            {
+                AddressId = address.AddressId,
+                Country = address.Country,
+                City = address.City,
+            };
+
+            return addressResponseDto;
         }
 
         [HttpGet]
-        public ActionResult<List<Address>> GetAddresses()
+        public ActionResult<List<AddressResponseDto>> GetAddresses()
         {
-            return _repository.GetAddresses();
+            var allAddresses = _addressRepository.GetAddresses();
+            var allAddressesResponseDto = new List<AddressResponseDto>();
+
+            for (int i= 0; i <= allAddresses.Count() - 1; i++)
+            {
+                allAddressesResponseDto.Add(new AddressResponseDto { 
+                    AddressId = allAddresses[i].AddressId, Country = allAddresses[i].Country, City = allAddresses[i].City});
+            }
+            return allAddressesResponseDto;
         }
 
         [HttpPut]
-        public ActionResult<int> UpdateAddress (AddressRequestDto addressDto, int id)
+        public ActionResult<int> UpdateAddress (AddressRequestDto addressRequestDto, int id)
         {
-            var addressExist = _repository.GetAddress(id);
             var address = new Address
             {
-                Country = addressDto.Country,
-                Street = addressDto.Street,
-                City = addressDto.City,
+                Country = addressRequestDto.Country,
+                Street = addressRequestDto.Street,
+                City = addressRequestDto.City,
             };
 
-            if (addressExist != null)
+            if (_addressRepository.GetAddress(id) != null)
             {
-                address.AddressId = addressExist.AddressId;
-                _repository.UpdateAddress(address);
+                address.AddressId = id;
+                _addressRepository.UpdateAddress(address);
             }
-            return id;
+            return address.AddressId;
         }
 
         [HttpDelete("id")]
-        public ActionResult<int> DeleteAddress(int id) 
+        public ActionResult<int> DeleteAddress(int id)
         {
-            var address =_repository.GetAddress(id);
-            _repository.DeleteAddress(address);
-            return id;
+            var address = _addressRepository.GetAddress(id);
+            _addressRepository.DeleteAddress(address);
+            return address.AddressId;
         }
     }
 }
