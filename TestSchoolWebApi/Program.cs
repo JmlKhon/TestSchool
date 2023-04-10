@@ -1,11 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 using TestSchool.Models;
 using TestSchool.Repository;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson(op => op.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
 var config = builder.Configuration.GetSection("ConnectionStrings");
 builder.Services.AddDbContext<SchoolDbContext>(option => option.UseNpgsql(config["Connect"]));
