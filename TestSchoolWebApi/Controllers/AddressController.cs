@@ -31,21 +31,39 @@ namespace TestSchool.Controllers
         }
 
         [HttpGet("id")]
-        public ActionResult<Address> GetAddress(int id)
-        {
-            return _repository.GetAddress(id);
+        public ActionResult<AddressResponseDto> GetAddress(int id)
+        { 
+            var address = _repository.GetAddress(id);
+            var addressResponseDto = new AddressResponseDto
+            {
+                AddressId = address.AddressId,
+                Country = address.Country,
+                City = address.City,
+            };
+            return addressResponseDto;
         }
 
         [HttpGet]
-        public ActionResult<List<Address>> GetAddresses()
+        public ActionResult<List<AddressResponseDto>> GetAddresses()
         {
-            return _repository.GetAddresses();
+            var allAddresses = _repository.GetAddresses();
+            var allAddressesResponseDto = new List<AddressResponseDto>();
+
+            for (int i = 0; i <= allAddresses.Count() - 1; i++)
+            {
+                allAddressesResponseDto.Add(new AddressResponseDto
+                {
+                    AddressId = allAddresses[i].AddressId,
+                    Country = allAddresses[i].Country,
+                    City = allAddresses[i].City
+                });
+            }
+            return allAddressesResponseDto;
         }
 
         [HttpPut]
         public ActionResult<int> UpdateAddress (AddressRequestDto addressDto, int id)
         {
-            var addressExist = _repository.GetAddress(id);
             var address = new Address
             {
                 Country = addressDto.Country,
@@ -53,9 +71,9 @@ namespace TestSchool.Controllers
                 City = addressDto.City,
             };
 
-            if (addressExist != null)
+            if (_repository.GetAddress(id) != null)
             {
-                address.AddressId = addressExist.AddressId;
+                address.AddressId = id;
                 _repository.UpdateAddress(address);
             }
             return id;

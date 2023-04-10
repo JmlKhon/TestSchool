@@ -33,21 +33,41 @@ namespace TestSchool.Controllers
         }
 
         [HttpGet("id")]
-        public ActionResult<Student> GetStudent(int id)
+        public ActionResult<StudentResponseDto> GetStudent(int id)
         {
-            return _studentRepository.GetStudent(id);
+            var student = _studentRepository.GetStudent(id);
+            var studentResponseDto = new StudentResponseDto
+            {
+                StudentId = student.StudentId,
+                StudentName = ($"{student.FirstName} {student.LastName}"),
+                Address = ($"{student.Address.Country} {student.Address.City}"),
+            };
+
+            return studentResponseDto;
         }
 
         [HttpGet]
-        public ActionResult<List<Student>> GetStudents() 
+        public ActionResult<List<StudentResponseDto>> GetStudents() 
         {
-            return _studentRepository.GetStudents();
+            var allStudents = _studentRepository.GetStudents();
+            var allStudentsResponseDto = new List<StudentResponseDto>();
+
+            for (int i = 0; i <= allStudents.Count() - 1; i++)
+            {
+                allStudentsResponseDto.Add(new StudentResponseDto
+                {
+                    StudentId = allStudents[i].StudentId,
+                    StudentName = ($"{allStudents[i].FirstName} {allStudents[i].LastName}"),
+                    Address = ($"{allStudents[i].Address.Country} {allStudents[i].Address.City}")
+                });
+            }
+
+            return allStudentsResponseDto;
         }
 
         [HttpPost]
         public ActionResult<int> UpdateStudent(StudentRequestDto studentRequestDto,int id) 
         {
-            var studentExist = _studentRepository.GetStudent(id);
             var student = new Student
             {
                 FirstName = studentRequestDto.FirstName,
@@ -56,9 +76,9 @@ namespace TestSchool.Controllers
                 Phone = studentRequestDto.Phone,
                 AddressId = studentRequestDto.AdressId,
             };
-            if (studentExist != null)
+            if (_studentRepository.GetStudent(id) != null)
             {
-                student.StudentId = studentExist.StudentId;
+                student.StudentId = id;
                 _studentRepository.UpdateStudent(student);
             }
             return id;
