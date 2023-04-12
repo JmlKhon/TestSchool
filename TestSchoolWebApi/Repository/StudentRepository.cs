@@ -32,7 +32,6 @@ namespace TestSchool.Repository
             studentExist.LastName = student.LastName;
             studentExist.FirstName = student.FirstName;
             studentExist.AddressId = student.AddressId;
-
             _context.SaveChanges();
         }
 

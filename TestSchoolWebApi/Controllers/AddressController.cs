@@ -10,11 +10,11 @@ namespace TestSchool.Controllers
     [ApiController]
     public class AddressController : ControllerBase
     {
-        private readonly IAddressRepository _repository;
+        private readonly IAddressRepository _addressRepository;
 
         public AddressController(IAddressRepository repository)
         {
-            _repository = repository;
+            _addressRepository = repository;
         }
 
         [HttpPost]
@@ -26,14 +26,14 @@ namespace TestSchool.Controllers
                 Street = addressDto.Street,
                 City = addressDto.City,
             };
-            _repository.AddAddress(address);
+            _addressRepository.AddAddress(address);
             return address.AddressId;
         }
 
         [HttpGet("id")]
         public ActionResult<AddressResponseDto> GetAddress(int id)
         { 
-            var address = _repository.GetAddress(id);
+            var address = _addressRepository.GetAddress(id);
             var addressResponseDto = new AddressResponseDto
             {
                 AddressId = address.AddressId,
@@ -46,7 +46,7 @@ namespace TestSchool.Controllers
         [HttpGet]
         public ActionResult<List<AddressResponseDto>> GetAddresses()
         {
-            var allAddresses = _repository.GetAddresses();
+            var allAddresses = _addressRepository.GetAddresses();
             var allAddressesResponseDto = new List<AddressResponseDto>();
 
             for (int i = 0; i <= allAddresses.Count() - 1; i++)
@@ -71,10 +71,10 @@ namespace TestSchool.Controllers
                 City = addressDto.City,
             };
 
-            if (_repository.GetAddress(id) != null)
+            if (_addressRepository.GetAddress(id) != null)
             {
                 address.AddressId = id;
-                _repository.UpdateAddress(address);
+                _addressRepository.UpdateAddress(address);
             }
             return id;
         }
@@ -82,9 +82,9 @@ namespace TestSchool.Controllers
         [HttpDelete("id")]
         public ActionResult<int> DeleteAddress(int id) 
         {
-            var address =_repository.GetAddress(id);
-            _repository.DeleteAddress(address);
-            return id;
+            var address =_addressRepository.GetAddress(id);
+            _addressRepository.DeleteAddress(address);
+            return address.AddressId;
         }
     }
 }

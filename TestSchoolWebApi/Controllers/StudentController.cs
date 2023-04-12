@@ -42,12 +42,11 @@ namespace TestSchool.Controllers
                 StudentName = ($"{student.FirstName} {student.LastName}"),
                 Address = ($"{student.Address.Country} {student.Address.City}"),
             };
-
             return studentResponseDto;
         }
 
         [HttpGet]
-        public ActionResult<List<StudentResponseDto>> GetStudents() 
+        public ActionResult<List<StudentResponseDto>> GetStudents()
         {
             var allStudents = _studentRepository.GetStudents();
             var allStudentsResponseDto = new List<StudentResponseDto>();
@@ -61,12 +60,11 @@ namespace TestSchool.Controllers
                     Address = ($"{allStudents[i].Address.Country} {allStudents[i].Address.City}")
                 });
             }
-
             return allStudentsResponseDto;
         }
 
-        [HttpPost]
-        public ActionResult<int> UpdateStudent(StudentRequestDto studentRequestDto,int id) 
+        [HttpPut]
+        public ActionResult<int> UpdateStudent(StudentRequestDto studentRequestDto,int id)
         {
             var student = new Student
             {
@@ -87,9 +85,9 @@ namespace TestSchool.Controllers
         [HttpDelete("id")]
         public ActionResult<int> DeleteStudent(int id)
         {
-            var student= _studentRepository.GetStudent(id);
+            var student = _studentRepository.GetStudent(id);
             _studentRepository.DeleteStudent(student);
-            return id;
+            return student.StudentId;
         }
     }
 }
