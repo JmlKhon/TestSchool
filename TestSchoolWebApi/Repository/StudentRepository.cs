@@ -1,4 +1,5 @@
-﻿using TestSchool.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using TestSchool.Models;
 
 namespace TestSchool.Repository
 {
@@ -17,15 +18,11 @@ namespace TestSchool.Repository
             return student.StudentId;
         }
 
-        public Student GetStudent(int id)
-        {
-            return _context.Students.FirstOrDefault(u => u.StudentId == id);
-        }
+        public Student GetStudent(int id) => _context.Students
+            .Include(n => n.Address).FirstOrDefault(u => u.StudentId == id);
 
-        public List<Student> GetStudents()
-        {
-            return _context.Students.ToList();
-        }
+        public List<Student> GetStudents() => _context.Students
+            .Include(n => n.Address).ToList();
 
         public void UpdateStudent(Student student)
         {
