@@ -55,7 +55,6 @@ namespace TestSchool.Controllers
             {
                 Console.WriteLine(ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError);
-
             }
         }
 
