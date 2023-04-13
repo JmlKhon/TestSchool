@@ -23,14 +23,13 @@ namespace TestSchool.Repository
 
         public List<Address> GetAddresses(string? searchWord)
         {
-            var allAddresses = _context.Address
-                .Include(n => n.Students);
+            var allAddresses = _context.Addres.Include(n => n.Students).ToList();
             if(!string.IsNullOrEmpty(searchWord) )
             {
-                allAddresses.Where(n => n.Country.Contains(searchWord)).ToList();
+                allAddresses = allAddresses.Where(n => n.Country.Contains(searchWord)).ToList();
             }
-            var sortAllAddresses = allAddresses.OrderBy(n => n.Country);
-            return sortAllAddresses.ToList();
+            var sortingAllAddresses = allAddresses.OrderBy(n => n.Country);
+            return sortingAllAddresses.ToList();
         }
 
         public void UpdateAddress(Address address)
