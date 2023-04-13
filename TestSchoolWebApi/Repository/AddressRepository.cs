@@ -23,7 +23,7 @@ namespace TestSchool.Repository
 
         public List<Address> GetAddresses(string? searchWord)
         {
-            var allAddresses = _context.Addres.Include(n => n.Students).ToList();
+            var allAddresses = _context.Address.Include(n => n.Students).ToList();
             if(!string.IsNullOrEmpty(searchWord) )
             {
                 allAddresses = allAddresses.Where(n => n.Country.Contains(searchWord)).ToList();
