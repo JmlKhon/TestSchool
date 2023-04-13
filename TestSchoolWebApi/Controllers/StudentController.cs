@@ -61,11 +61,11 @@ namespace TestSchool.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<StudentResponseDto>> GetStudents()
+        public ActionResult<List<StudentResponseDto>> GetStudents(string? searchWord)
         {
             try
             {
-                var allStudents = _studentRepository.GetStudents();
+                var allStudents = _studentRepository.GetStudents(searchWord);
                 var allStudentsResponseDto = new List<StudentResponseDto>();
 
                 for (int i = 0; i <= allStudents.Count() - 1; i++)
