@@ -27,7 +27,7 @@ namespace TestSchool.Repository
                 .Include(n => n.Students);
             if(!string.IsNullOrEmpty(searchWord) )
             {
-                allAddresses.Where(n => n.Country.Contains(searchWord)).ToList();
+                allAddresses = allAddresses.Where(n => n.Country.Contains(searchWord)).ToList();
             }
             var sortAllAddresses = allAddresses.OrderBy(n => n.Country);
             return sortAllAddresses.ToList();
