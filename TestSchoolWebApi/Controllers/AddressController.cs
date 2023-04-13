@@ -59,11 +59,11 @@ namespace TestSchool.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<AddressResponseDto>> GetAddresses()
+        public ActionResult<List<AddressResponseDto>> GetAddresses(string? searchWord)
         {
             try
             {
-                var allAddresses = _addressRepository.GetAddresses();
+                var allAddresses = _addressRepository.GetAddresses(searchWord);
                 var allAddressesResponseDto = new List<AddressResponseDto>();
 
                 for (int i = 0; i <= allAddresses.Count() - 1; i++)
