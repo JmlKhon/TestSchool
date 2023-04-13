@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using TestSchool.Models;
 using TestSchool.Models.Dtos;
 using TestSchool.Repository;
@@ -20,71 +19,111 @@ namespace TestSchool.Controllers
         [HttpPost]
         public ActionResult<int> AddAddress(AddressRequestDto addressDto)
         {
-            var address = new Address
+            try
             {
-                Country = addressDto.Country,
-                Street = addressDto.Street,
-                City = addressDto.City,
-            };
-            _addressRepository.AddAddress(address);
-            return address.AddressId;
+                var address = new Address
+                {
+                    Country = addressDto.Country,
+                    Street = addressDto.Street,
+                    City = addressDto.City,
+                };
+                _addressRepository.AddAddress(address);
+                return address.AddressId;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
 
         [HttpGet("id")]
         public ActionResult<AddressResponseDto> GetAddress(int id)
-        { 
-            var address = _addressRepository.GetAddress(id);
-            var addressResponseDto = new AddressResponseDto
+        {
+            try
             {
-                AddressId = address.AddressId,
-                Country = address.Country,
-                City = address.City,
-            };
-            return addressResponseDto;
+                var address = _addressRepository.GetAddress(id);
+                var addressResponseDto = new AddressResponseDto
+                {
+                    AddressId = address.AddressId,
+                    Country = address.Country,
+                    City = address.City,
+                };
+                return addressResponseDto;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
 
         [HttpGet]
         public ActionResult<List<AddressResponseDto>> GetAddresses()
         {
-            var allAddresses = _addressRepository.GetAddresses();
-            var allAddressesResponseDto = new List<AddressResponseDto>();
-
-            for (int i = 0; i <= allAddresses.Count() - 1; i++)
+            try
             {
-                allAddressesResponseDto.Add(new AddressResponseDto
+                var allAddresses = _addressRepository.GetAddresses();
+                var allAddressesResponseDto = new List<AddressResponseDto>();
+
+                for (int i = 0; i <= allAddresses.Count() - 1; i++)
                 {
-                    AddressId = allAddresses[i].AddressId,
-                    Country = allAddresses[i].Country,
-                    City = allAddresses[i].City
-                });
+                    allAddressesResponseDto.Add(new AddressResponseDto
+                    {
+                        AddressId = allAddresses[i].AddressId,
+                        Country = allAddresses[i].Country,
+                        City = allAddresses[i].City
+                    });
+                }
+                return allAddressesResponseDto;
             }
-            return allAddressesResponseDto;
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
 
         [HttpPut]
-        public ActionResult<int> UpdateAddress (AddressRequestDto addressDto, int id)
+        public ActionResult<int> UpdateAddress(AddressRequestDto addressDto, int id)
         {
-            var address = new Address
+            try
             {
-                Country = addressDto.Country,
-                Street = addressDto.Street,
-                City = addressDto.City,
-            };
+                var address = new Address
+                {
+                    Country = addressDto.Country,
+                    Street = addressDto.Street,
+                    City = addressDto.City,
+                };
 
-            if (_addressRepository.GetAddress(id) != null)
-            {
-                address.AddressId = id;
-                _addressRepository.UpdateAddress(address);
+                if (_addressRepository.GetAddress(id) != null)
+                {
+                    address.AddressId = id;
+                    _addressRepository.UpdateAddress(address);
+                }
+                return id;
             }
-            return id;
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
 
         [HttpDelete("id")]
-        public ActionResult<int> DeleteAddress(int id) 
+        public ActionResult<int> DeleteAddress(int id)
         {
-            var address =_addressRepository.GetAddress(id);
-            _addressRepository.DeleteAddress(address);
-            return address.AddressId;
+            try
+            {
+                var address = _addressRepository.GetAddress(id);
+                _addressRepository.DeleteAddress(address);
+                return address.AddressId;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return StatusCode(StatusCodes.Status204NoContent);
+            }
         }
     }
 }
