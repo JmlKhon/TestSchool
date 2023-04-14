@@ -21,7 +21,7 @@ namespace TestSchool.Repository
         public Address GetAddress(int id) => _context.Address
             .Include(n => n.Students).FirstOrDefault(u => u.AddressId == id);
 
-        public List<Address> GetAddresses(string? searchWord)
+        public List<List<Address>> GetAddresses(string? searchWord)
         {
             var allAddresses = _context.Address.Include(n => n.Students).ToList();
             if(!string.IsNullOrEmpty(searchWord) )
@@ -29,7 +29,9 @@ namespace TestSchool.Repository
                 allAddresses = allAddresses.Where(n => n.Country.Contains(searchWord)).ToList();
             }
             var sortingAllAddresses = allAddresses.OrderBy(n => n.Country);
-            return sortingAllAddresses.ToList();
+            var descendingAllAddresses = allAddresses.OrderByDescending(n => n.Country).ToList();
+            var generalListOfAddresses = new List<List<Address>>() { sortingAllAddresses, descendingAllAddresses };
+            return generalListOfAddresses;
         }
 
         public void UpdateAddress(Address address)
