@@ -24,11 +24,11 @@ namespace TestSchool.Repository
         public List<List<Address>> GetAddresses(string? searchWord)
         {
             var allAddresses = _context.Address.Include(n => n.Students).ToList();
-            if(!string.IsNullOrEmpty(searchWord) )
+            if(!string.IsNullOrEmpty(searchWord))
             {
                 allAddresses = allAddresses.Where(n => n.Country.Contains(searchWord)).ToList();
             }
-            var sortingAllAddresses = allAddresses.OrderBy(n => n.Country);
+            var sortingAllAddresses = allAddresses.OrderBy(n => n.Country).ToList();
             var descendingAllAddresses = allAddresses.OrderByDescending(n => n.Country).ToList();
             var generalListOfAddresses = new List<List<Address>>() { sortingAllAddresses, descendingAllAddresses };
             return generalListOfAddresses;
