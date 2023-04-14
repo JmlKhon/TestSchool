@@ -59,14 +59,14 @@ namespace TestSchool.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<AddressResponseDto>> GetAddresses()
+        public ActionResult<List<AddressResponseDto>> GetAddresses(string? searchWord, string? togriYokiTeskari)
         {
             try
             {
-                var allAddresses = _addressRepository.GetAddresses();
+                var allAddresses = _addressRepository.GetAddresses(searchWord, togriYokiTeskari);
                 var allAddressesResponseDto = new List<AddressResponseDto>();
 
-                for (int i = 0; i <= allAddresses.Count() - 1; i++)
+                for (int i = 0; i < allAddresses.Count(); i++)
                 {
                     allAddressesResponseDto.Add(new AddressResponseDto
                     {
@@ -80,7 +80,7 @@ namespace TestSchool.Controllers
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                return StatusCode(StatusCodes.Status500InternalServerError);
+                return StatusCode(StatusCodes.Status404NotFound);
             }
         }
 
