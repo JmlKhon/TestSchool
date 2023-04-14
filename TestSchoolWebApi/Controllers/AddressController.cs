@@ -59,32 +59,28 @@ namespace TestSchool.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<List<AddressResponseDto>>> GetAddresses(string? searchWord)
+        public ActionResult<List<AddressResponseDto>> GetAddresses(string? searchWord, string? togriYokiTeskari)
         {
             try
             {
-                var allAddresses = _addressRepository.GetAddresses(searchWord);
-                var allAddressesResponseDto = new List<List<AddressResponseDto>>();
+                var allAddresses = _addressRepository.GetAddresses(searchWord, togriYokiTeskari);
+                var allAddressesResponseDto = new List<AddressResponseDto>();
 
-                for (int j = 0; j < allAddresses.Count(); j++)
+                for (int i = 0; i < allAddresses.Count(); i++)
                 {
-                    allAddressesResponseDto.Add(new List<AddressResponseDto>());
-                    for (int k = 0; k < allAddresses[j].Count(); k++)
+                    allAddressesResponseDto.Add(new AddressResponseDto
                     {
-                        allAddressesResponseDto[j].Add(new AddressResponseDto
-                        {
-                            AddressId = allAddresses[j][k].AddressId,
-                            Country = allAddresses[j][k].Country,
-                            City = allAddresses[j][k].City,
-                        });
-                    }
+                        AddressId = allAddresses[i].AddressId,
+                        Country = allAddresses[i].Country,
+                        City = allAddresses[i].City
+                    });
                 }
                 return allAddressesResponseDto;
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                return StatusCode(StatusCodes.Status500InternalServerError);
+                return StatusCode(StatusCodes.Status404NotFound);
             }
         }
 
