@@ -59,7 +59,7 @@ namespace TestSchool.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<AddressResponseDto>> GetAddresses(string? searchWord)
+        public ActionResult<List<List<AddressResponseDto>>> GetAddresses(string? searchWord)
         {
             try
             {
