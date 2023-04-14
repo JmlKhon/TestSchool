@@ -21,17 +21,31 @@ namespace TestSchool.Repository
         public Address GetAddress(int id) => _context.Address
             .Include(n => n.Students).FirstOrDefault(u => u.AddressId == id);
 
-        public List<List<Address>> GetAddresses(string? searchWord)
+         public List<Address> GetAddresses(string? searchWord, string? togriYokiTeskari)
         {
             var allAddresses = _context.Address.Include(n => n.Students).ToList();
-            if(!string.IsNullOrEmpty(searchWord))
+            if(!string.IsNullOrEmpty(searchWord) )
             {
                 allAddresses = allAddresses.Where(n => n.Country.Contains(searchWord)).ToList();
             }
-            var sortingAllAddresses = allAddresses.OrderBy(n => n.Country).ToList();
-            var descendingAllAddresses = allAddresses.OrderByDescending(n => n.Country).ToList();
-            var generalListOfAddresses = new List<List<Address>>() { sortingAllAddresses, descendingAllAddresses };
-            return generalListOfAddresses;
+
+            if (!string.IsNullOrEmpty(togriYokiTeskari))
+            {
+                if (togriYokiTeskari == "1")
+                {
+                    allAddresses = allAddresses.OrderBy(n => n.Country).ToList();
+                }
+                else if (togriYokiTeskari == "2") 
+                {
+                    allAddresses = allAddresses.OrderByDescending(n => n.Country).ToList();
+                }
+                else
+                {
+                    throw new Exception();
+                }
+            }
+            else allAddresses = allAddresses.OrderBy(n => n.Country).ToList();
+            return allAddresses;
         }
 
         public void UpdateAddress(Address address)
