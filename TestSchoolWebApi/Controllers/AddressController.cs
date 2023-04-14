@@ -64,16 +64,20 @@ namespace TestSchool.Controllers
             try
             {
                 var allAddresses = _addressRepository.GetAddresses(searchWord);
-                var allAddressesResponseDto = new List<AddressResponseDto>();
+                var allAddressesResponseDto = new List<List<AddressResponseDto>>();
 
-                for (int i = 0; i <= allAddresses.Count() - 1; i++)
+                for (int j = 0; j < allAddresses.Count(); j++)
                 {
-                    allAddressesResponseDto.Add(new AddressResponseDto
+                    allAddressesResponseDto.Add(new List<AddressResponseDto>());
+                    for (int k = 0; k < allAddresses[j].Count(); k++)
                     {
-                        AddressId = allAddresses[i].AddressId,
-                        Country = allAddresses[i].Country,
-                        City = allAddresses[i].City
-                    });
+                        allAddressesResponseDto[j].Add(new AddressResponseDto
+                        {
+                            AddressId = allAddresses[j][k].AddressId,
+                            Country = allAddresses[j][k].Country,
+                            City = allAddresses[j][k].City,
+                        });
+                    }
                 }
                 return allAddressesResponseDto;
             }
