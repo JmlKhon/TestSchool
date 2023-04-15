@@ -21,15 +21,30 @@ namespace TestSchool.Repository
         public Student GetStudent(int id) => _context.Students
             .Include(n => n.Address).FirstOrDefault(u => u.StudentId == id);
 
-        public List<Student> GetStudents(string? searchWord)
+        public List<Student> GetStudents(string? searchWord, string? togriYokiTeskari)
         {
             var allStudents = _context.Students.Include(n => n.Address).ToList();
             if (!string.IsNullOrEmpty(searchWord))
             {
                 allStudents = allStudents.Where(n => n.FirstName.Contains(searchWord) || n.LastName.Contains(searchWord)).ToList();
             }
-            var sortingStudent = allStudents.OrderBy(n => n.StudentId).ToList();
-            return sortingStudent;
+            if (!string.IsNullOrEmpty(togriYokiTeskari))
+            {
+                if (togriYokiTeskari == "1")
+                {
+                    allStudents = allStudents.OrderBy(n => n.StudentId).ToList();
+                }
+                else if (togriYokiTeskari == "2")
+                {
+                    allStudents = allStudents.OrderByDescending(n => n.StudentId).ToList();
+                }
+                else
+                {
+                    throw new Exception();
+                }
+            }
+            else allStudents = allStudents.OrderBy(n => n.StudentId).ToList();
+            return allStudents;
         }
 
         public void UpdateStudent(Student student)
