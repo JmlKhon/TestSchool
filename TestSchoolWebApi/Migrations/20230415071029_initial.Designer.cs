@@ -11,7 +11,7 @@ using TestSchool.Models;
 namespace TestSchool.Migrations
 {
     [DbContext(typeof(SchoolDbContext))]
-    [Migration("20230412180422_initial")]
+    [Migration("20230415071029_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

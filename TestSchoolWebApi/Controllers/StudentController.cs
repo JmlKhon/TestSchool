@@ -61,11 +61,11 @@ namespace TestSchool.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<StudentResponseDto>> GetStudents()
+        public ActionResult<List<StudentResponseDto>> GetStudents(string? searchWord, string? togriYokiTeskari)
         {
             try
             {
-                var allStudents = _studentRepository.GetStudents();
+                var allStudents = _studentRepository.GetStudents(searchWord, togriYokiTeskari);
                 var allStudentsResponseDto = new List<StudentResponseDto>();
 
                 for (int i = 0; i <= allStudents.Count() - 1; i++)
@@ -82,7 +82,7 @@ namespace TestSchool.Controllers
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                return StatusCode(StatusCodes.Status500InternalServerError);
+                return StatusCode(StatusCodes.Status404NotFound);
             }
         }
 
