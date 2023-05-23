@@ -26,3 +26,5 @@ o'tilgan darslarni takrorlash uchun yordam beradi.
 5. `add-database`  `o'zingi nom berasiz` kiritiladi (`enter`ni bosish esdan chiqmasin!)
 6. `update-database` kiritiladi (`enter`ni bosish esdan chiqmasin!)
 7. Dasturni `run` qilsangiz bo'ladi
+
+Hello! I'm a student too. can you accept my changes? pull request request my homework.
